@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="elem">Click me</button>
+    <script>
+        const elem = document.getElementById('elem');
+
+//regular function case: 
+        elem.onclick = function(event) {
+            //  show event type, element and coordinates of the click
+            alert(event.type + " at " + event.currentTarget);  
+            console.log("Regular function - this:", this); //outputs the button element
+            alert("Coordinates: " + event.clientX + ":" + event.clientY);
+          };
+
+// arrow function case: 
+        elem.onclick = (event) => {
+            // show event type, element and coordinates of the click
+            alert(event.type + " at " + event.currentTarget);  // click at [object HTMLButtonElement]
+            console.log("Arrow function - this:", this); 
+            alert("Coordinates: " + event.clientX + ":" + event.clientY);
+        };
+
+
+
+        //event.currentTarget:  Returns the element that handled the event (elem, in this case).
+        // When using regular functions as event handlers, 'this' refers to the element that triggered the event (event.currentTarget).
+        // When using arrow functions as event handlers, 'this' does not refer to the element that triggered the event; it typically refers to the global object or the nearest surrounding lexical context.
+
+        // 1. using objects with handle events:-
+
+        let obj = {
+            handleEvent(event) {
+                alert(event.type + " at " + event.currentTarget);
+            }
+        };
+        elem.addEventListener('click', obj);
+
+        //When the button is clicked, obj.handleEvent(event) is invoked by addEventListener.
+        // Inside handleEvent, event.type gives the type of the event ("click" in this case), and event.currentTarget gives the element that handled the event (the button).
+
+
+
+        // 2. Using a Custom Class with handleEvent:-
+        class Menu {
+            handleEvent(event) {
+                switch (event.type) {
+                    case 'mousedown':
+                        elem.innerHTML = "Mouse button pressed";
+                        break;
+                    case 'mouseup':
+                        elem.innerHTML += "...and released.";
+                        break;
+                }
+            }
+        }
+        let menu = new Menu();
+        elem.addEventListener('mousedown', menu);
+        elem.addEventListener('mouseup', menu);
+
+        // When the mouse button is pressed (mousedown) or released (mouseup), menu.handleEvent(event) is called.
+        // Depending on the event type (event.type), different actions are performed. For mousedown, the button text changes to indicate the mouse button is pressed; for mouseup, it appends text to indicate the button is released.
+    </script>
+</body>
+
+</html>

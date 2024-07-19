@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button id="elem">Click me!</button>
+
+    <!-- we can generate events from javascript. -->
+    <!-- SYNTAX: let event = new Event(type[, options]); -->
+    <!-- Arguments:
+    1.) type – event type, a string like "click" or our own like "my-event"
+    2.) options - bubbles: true/false – if true, then the event bubbles.
+                  cancelable: true/false – if true, then the “default action” may be prevented. 
+        By default:  both are false: {bubbles: false, cancelable: false} -->
+
+    <script>
+        let myEvent = new Event("hello", { cancelable: true }); 
+        document.addEventListener("hello", function (event){ 
+            alert("Hello from " + event.target.tagName); // Hello from button
+        });
+        elem.dispatchEvent(myEvent);
+        //elem is the element (<button id="elem">Click me!</button>) that dispatches (triggers) the "hello" event.
+       // When elem.dispatchEvent(myEvent); is called, it triggers the "hello" event on elem.
+    </script>
+  
+    <!-- Notes: We should use addEventListener for our custom events, because on<event> only exists for built-in events, document.onhello doesn’t work.
+                Must set bubbles:true, otherwise the event won’t bubble up.-->
+
+</body>
+
+</html>

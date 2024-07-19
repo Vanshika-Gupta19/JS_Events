@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+    
+        // example:1
+
+        function asyncfunc1() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log("data1");
+                    resolve("success");
+                }, 2000);
+            });
+        };
+
+        function asyncfunc2() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log("data2");
+                    resolve("success");
+                }, 2000);
+            });
+        };
+
+
+        console.log("fetching data1...");
+        asyncfunc1().then((res) => {
+            console.log("fetching data2...")
+            asyncfunc2().then((res) => { });
+        });
+
+
+
+        //example:2
+
+        function delay(num) {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, num);
+            });
+        }
+
+        delay(1000).then(function () {
+            return delay(5000);
+        })
+            .then(function () {
+                return delay(2000);
+            })
+            .then(function () {
+                console.log("all done!")
+            })
+
+
+
+        //example:3
+
+        function getData(d) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(d);
+                }, 1000);
+            });
+        }
+        var x;
+        getData(10)
+            .then(function(num1){
+                x = 1 + num1;
+                return getData(30);
+            })
+            .then(function(num2){
+                var y = 1 + num2;
+                return getData("Meaning of life: " + (x + y));
+            })
+            .then(function(answer){
+                console.log(answer);
+            });                         //Meaning of life: 42
+
+
+
+
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- //example:4 :- left to do...
+        
+        function getFile(file) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(file);
+                    console.log(file);
+                }, 1000);
+            });
+        }
+
+        ['file1', 'file2', 'file3'].map(getFile)
+
+        // Using reduce to make the promises execute sequentially
+        files.reduce((chain, file) => {
+            // chain represents the accumulated Promise chain
+            return chain.then(() => {
+                // Returning a Promise that resolves with the result of getFile(file)
+                return getFile(file);
+            }).then((result) => {
+                // Logging the result after each getFile(file) operation completes
+                console.log(`File ${result} processed`);
+            });
+        }, Promise.resolve()); -->

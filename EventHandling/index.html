@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- eg:2 -->
+    <script>
+        elem.onclick = function () {
+            alert('Click!');
+        };
+    </script>
+
+</head>
+
+<body>
+    <!-- eg:1 -->
+    <!-- To react on events we can assign a handler – a function that runs in case of an event. -->
+    <input value="Click me" onclick="alert('Click!')" type="button">
+    <!-- An HTML-attribute is not a convenient place to write a lot of code, so we’d better create a JavaScript function and call it there -->
+
+
+    <!-- eg:2 -->
+    <input type="button" id="elem" value="Button">
+    <!-- To remove a handler – assign elem.onclick = null -->
+
+
+    <!--  eg:3  Accessing the element using 'this' -->
+    <button onclick="alert(this.innerHTML)">Click me</button>
+
+
+</body>
+
+</html>

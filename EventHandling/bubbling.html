@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbling</title>
+</head>
+<body>
+    <!-- Bubbling?  -->
+    <!-- When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors. -->
+     <!-- bottom to top -->
+
+     <!-- focus is an exception, it doesn't bubble -->
+
+    <!-- 1. -->
+    <div>
+        <ul id="images">
+            <li><img id="bird" width="200px" src="https://images.pexels.com/photos/416179/pexels-photo-416179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""></li>
+
+            <li id="list"><img id="flower" width="200px" height="150px" src="https://hips.hearstapps.com/hmg-prod/images/pink-and-light-blue-myosotis-or-alpine-forget-me-royalty-free-image-1703084316.jpg?crop=0.602xw:1.00xh;0.300xw,0&resize=980:*" alt=""></li>
+
+            <li><a id="google" href="https://google.com">Google</a></li>
+        </ul>
+    </div>
+
+
+    <!-- 2. -->
+    <form style="border: 1px solid black ; padding: 2px" id="myForm">
+        <input type="text" name="username">
+        <button type="button">Submit</button>
+    </form>
+      
+
+    <script>
+
+        //Bubbling ---->
+        document.getElementById('images').addEventListener('click', function(e){
+            console.log('clicked inside the ul')
+        }, false);
+
+        document.getElementById('list').addEventListener('click', function(e){
+            console.log('list clicked')
+        }, false);
+
+        document.getElementById('flower').addEventListener('click', function(e){
+            console.log('flower clicked')
+            // e.stopPropagation() //bubbling will not happen 
+            // e.stopImmediatePropagation();
+        }, false);
+
+        // if we want to change the default behaviour:
+        document.getElementById('google').addEventListener('click', function(e){
+            console.log('google clicked')
+            e.preventDefault() // now, google will not open
+            e.stopPropagation() //bubbling will not happen 
+        }, false);
+
+
+        //Capturing ---->
+        // top to bottom 
+
+        // document.getElementById('images').addEventListener('click', function(e){
+        //     console.log('clicked inside the ul')
+        // }, true);
+
+        // document.getElementById('flower').addEventListener('click', function(e){
+        //     console.log('flower clicked')
+        // }, true);
+
+
+        // 2.
+
+  document.getElementById('myForm').onclick = function(event) {
+  console.log('this:', this); // Logs the <form> element, it refers the element where the event handler was initially attached 
+  console.log('event.target:', event.target); // Logs the element that was clicked (could be <form>, <input>, or <button>)
+};
+    </script>
+
+    <!-- SUMMARY: -->
+    <!-- 1.) event.target – the deepest element that originated the event.
+    2.) event.currentTarget (=this) – the current element that handles the event (the one that has the handler on it)
+    3.) event.eventPhase – the current phase (capturing=1, target=2, bubbling=3). 
+    4.) Capturing is rarely used, usually we handle events on bubbling beacause the code that set the handler on a particular element knows maximum details about the element and what it does. 
+    5.) Any event handler can stop the event by calling event.stopPropagation(), but that’s not recommended in most of the cases.-->
+    
+</body>
+</html>

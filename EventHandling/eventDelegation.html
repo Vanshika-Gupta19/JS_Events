@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .card {
+            width: 100px;
+            height: 120px;
+            background-color:pink;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 36px;
+        }
+
+        .add-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            cursor: pointer;
+            background-color: skyblue;
+            color: black;
+            position: absolute;
+            bottom: 33px;
+            right: 32px;
+            border-radius: 100%;
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Event Delegation</h2>
+    <div class="add-card" title="Add New Card">+</div>
+    <div class="container">
+    </div>
+
+    <script>
+        const addCardBtn = document.querySelector('.add-card')
+        const container = document.querySelector('.container')
+
+        const cardsList = document.querySelectorAll('.card')
+
+        let count = 1;
+
+        addCardBtn.addEventListener('click', () => {
+            const newCard = document.createElement('div')
+            newCard.classList.add('card')
+            newCard.innerText = count++
+            container.append(newCard)
+        })
+
+        container.addEventListener('click', (e) => {
+            if (e.target !== container) {
+                e.target.remove()
+            }
+        })
+    </script>
+
+<!-- It’s often used to add the same handling for many similar elements -->
+
+<!-- The algorithm:-
+Put a single handler on the container.
+In the handler – check the source element event.target.
+If the event happened inside an element that interests us, then handle the event. -->
+</body>
+
+</html>
